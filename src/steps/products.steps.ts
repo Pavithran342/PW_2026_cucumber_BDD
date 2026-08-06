@@ -3,6 +3,7 @@ import { expect } from "@playwright/test";
 import { CustomWorld } from "../support/world";
 import { LoginPage } from "../pages/LoginPage";
 import { ProductsPage } from "../pages/ProductsPage";
+import { config } from "../config/config";
 
 let loginPage: LoginPage;
 let productPage: ProductsPage;
@@ -12,8 +13,8 @@ Given('I am logged in as a valid user', async function (this: CustomWorld) {
     productPage = new ProductsPage(this.page);
 
     await loginPage.navigate();
-    await loginPage.enterUsername('standard_user');
-    await loginPage.enterPassword('secret_sauce');
+    await loginPage.enterUsername(config.users.standard.username);
+    await loginPage.enterPassword(config.users.standard.password);
     await loginPage.clickLogin();
 });
 

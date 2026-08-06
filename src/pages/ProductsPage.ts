@@ -3,8 +3,6 @@ import { Page } from '@playwright/test';
 
 export class ProductsPage {
     constructor(private page: Page) { }
-
-
   
     private locators = {
         inventoryItems: '.inventory_item',

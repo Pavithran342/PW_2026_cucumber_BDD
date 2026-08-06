@@ -1,4 +1,5 @@
 import { Page } from '@playwright/test';
+import { config } from '../config/config';
 
 export class LoginPage {
 
@@ -9,23 +10,30 @@ export class LoginPage {
         password: '#password',
         loginBtn: '#login-button',
         inventory: '#inventory_container',
-        error: '[data-test="error"]'
+        errormessage: 'h3[data-test="error"]',
     };
 
     async navigate() {
-        await this.page.goto('https://www.saucedemo.com/', { waitUntil: 'load' });
+        await this.page.goto(config.baseUrl, { waitUntil: 'domcontentloaded', timeout: config.timeout.navigation });
+        await this.page.locator(this.locators.username).waitFor({ state: 'visible', timeout: config.timeout.default });
     }
 
     async enterUsername(username: string) {
-        await this.page.locator(this.locators.username).fill(username);
+        const usernameField = this.page.locator(this.locators.username);
+        await usernameField.waitFor({ state: 'visible', timeout: config.timeout.default });
+        await usernameField.fill(username, { timeout: config.timeout.default });
     }
 
     async enterPassword(password: string) {
-        await this.page.locator(this.locators.password).fill(password);
+        const passwordField = this.page.locator(this.locators.password);
+        await passwordField.waitFor({ state: 'visible', timeout: config.timeout.default });
+        await passwordField.fill(password, { timeout: config.timeout.default });
     }
 
     async clickLogin() {
-        await this.page.locator(this.locators.loginBtn).click();
+        const loginButton = this.page.locator(this.locators.loginBtn);
+        await loginButton.waitFor({ state: 'visible', timeout: config.timeout.default });
+        await loginButton.click({ timeout: config.timeout.default });
     }
 
     async isInventoryVisible(): Promise<boolean> {
@@ -33,7 +41,9 @@ export class LoginPage {
     }
 
      async getErrorMessage(): Promise<string> {
-        return (await this.page.locator(this.locators.error).textContent()) ?? '';
+        const error = this.page.locator(this.locators.errormessage);
+        await error.waitFor({ state: 'visible', timeout: config.timeout.default });
+        return (await error.textContent()) ?? '';
     }
 
 }
