@@ -1,0 +1,22 @@
+{
+  "name": "pw_2026_cucumberbdd",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "cucumber-js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@cucumber/cucumber": "^13.2.0",
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.1.2",
+    "allure-cucumberjs": "^3.10.2",
+    "allure-js-commons": "^3.10.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^4.9.5"
+  }
+}
